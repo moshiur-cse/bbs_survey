@@ -86,7 +86,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
       ),
       _getTitleItemWidget(
         'Action',
-        100,
+        70,
         Colors.orange[700],
       ),
       Container(
@@ -94,7 +94,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
         height: 56,
         color: Colors.white,
       ),
-      _getTitleItemWidget('Name', 100, Colors.orange[700]),
+      _getTitleItemWidget('Name', 150, Colors.orange[700]),
       Container(
         width: 2,
         height: 56,
@@ -106,7 +106,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
         height: 56,
         color: Colors.white,
       ),
-      _getTitleItemWidget('NID', 100, Colors.orange[700]),
+      _getTitleItemWidget('NID', 150, Colors.orange[700]),
       Container(
         width: 2,
         height: 56,
@@ -127,7 +127,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
       color: color,
       child: Text(label,
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
+              fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white)),
       width: width,
       height: 56,
       padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -141,7 +141,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
       child: Text(
         _houseHoldInfoes[index].householdId,
         style: TextStyle(
-            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
       ),
       width: 120,
       height: 52,
@@ -163,35 +163,35 @@ class _HorizontalTableState extends State<HorizontalTable> {
               _refreshContactList();
             },
           ),
-          width: 100,
-          height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-          alignment: Alignment.centerLeft,
+          width: 70,
+          height: 50,
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          alignment: Alignment.center,
         ),
         Container(
           width: 2,
-          height: 56,
+          height: 52,
           color: Colors.blueGrey,
         ),
         Container(
           child: Text(
             _houseHoldInfoes[index].nameOfHead,
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 12),
           ),
-          width: 100,
+          width: 150,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
           width: 2,
-          height: 56,
+          height: 52,
           color: Colors.blueGrey,
         ),
         Container(
           child: Text(
             _houseHoldInfoes[index].mobileNumber,
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 12),
           ),
           width: 100,
           height: 52,
@@ -206,9 +206,9 @@ class _HorizontalTableState extends State<HorizontalTable> {
         Container(
           child: Text(
             _houseHoldInfoes[index].nationalId,
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 12),
           ),
-          width: 100,
+          width: 150,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
@@ -221,7 +221,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
         Container(
           child: Text(
             _houseHoldInfoes[index].numberOfMale.toString(),
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 12),
           ),
           width: 100,
           height: 52,
@@ -236,7 +236,7 @@ class _HorizontalTableState extends State<HorizontalTable> {
         Container(
           child: Text(
             _houseHoldInfoes[index].numberOfFemale.toString(),
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 12),
           ),
           width: 100,
           height: 52,

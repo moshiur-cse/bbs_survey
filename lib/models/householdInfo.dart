@@ -27,6 +27,18 @@ class HouseHoldInfo {
     numberOfFemale = map[colNumberOfFemale];
   }
 
+  factory HouseHoldInfo.fromJson(Map<String, dynamic> json) {
+    return HouseHoldInfo(
+      //id: json['id'],
+      householdId: json['householdId'],
+      nameOfHead: json['nameOfHead'],
+      mobileNumber: json['mobileNumber'],
+      nationalId: json['nationalId'],
+      numberOfMale: json['numberOfMale'],
+      numberOfFemale: json['numberOfFemale'],
+    );
+  }
+
   int id;
   String householdId;
   String nameOfHead;

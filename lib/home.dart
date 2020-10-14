@@ -9,6 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:toast/toast.dart';
 import 'animation/fade_animation.dart';
 import 'horizontal_data_table.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -17,6 +20,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -34,22 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
-  void _onItemTapped(int index) {
-    if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HorizontalTable()),
-      );
-    } else if (index == 1) {
-      //Timer(Duration(seconds: 3), () {
-      Toast.show("Data Sync", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      //});
-    }
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  List<HouseHoldInfo> _houseHoldInfoes = [];
 
   HouseHoldInfo _houseHoldInfo = HouseHoldInfo();
   DatabaseHelper _dbHelper;
@@ -62,11 +51,38 @@ class _MyHomePageState extends State<MyHomePage> {
   final _ctrMaleNo = TextEditingController();
   final _ctrFemaleNo = TextEditingController();
 
+  void _onItemTapped(int index) {
+    if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HorizontalTable()),
+      );
+    } else if (index == 1) {
+      //Timer(Duration(seconds: 3), () {
+
+      _houseHoldInfo.householdId = "22";
+      _houseHoldInfo.nameOfHead = "Naushin";
+      _houseHoldInfo.nationalId = "dhfsdklfhsdlf";
+      _houseHoldInfo.mobileNumber = "mobileNumber";
+      _houseHoldInfo.numberOfMale = 3;
+      _houseHoldInfo.numberOfFemale = 3;
+
+      var a = _dbHelper.addHouseHoldInfo(_houseHoldInfo);
+
+      //var a=_dbHelper.fetchAlbum();
+      Toast.show(a.toString(), context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   void initState() {
     super.initState();
     setState(() {
       _dbHelper = DatabaseHelper.instance;
     });
+    _refreshContactList();
   }
 
   @override
@@ -266,4 +282,11 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.orange[800],
         ),
       );
+
+  _refreshContactList() async {
+    List<HouseHoldInfo> x = await _dbHelper.fetchHouseHoldInfo();
+    setState(() {
+      _houseHoldInfoes = x;
+    });
+  }
 }
