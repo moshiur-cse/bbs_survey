@@ -144,17 +144,21 @@ class DatabaseHelper {
     }
   }
 
+  //http://192.168.0.191/bbs/api/MobileHouseholdInfoes
+  //http://192.168.0.191/sf/api/HouseholdInformations
   Future<HouseHoldInfo> addHouseHoldInfo(HouseHoldInfo houseHoldInfo) async {
+    DatabaseHelper _dbHelper = DatabaseHelper.instance;
+
     //print(houseHoldInfo.nameOfHead);
     final http.Response response = await http.post(
-      'http://192.168.0.191/sf/api/HouseholdInformations',
+      'http://202.53.173.185/sf/api/HouseholdInformations',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({
         "householdId": houseHoldInfo.householdId,
         "nameOfHead": houseHoldInfo.nameOfHead,
-        "mobileNumber": houseHoldInfo.mobileNumber,
+        "mobilenumber": houseHoldInfo.mobileNumber,
         "nationalId": houseHoldInfo.nationalId,
         "numberOfMale": houseHoldInfo.numberOfMale,
         "numberOfFemale": houseHoldInfo.numberOfFemale,
@@ -164,7 +168,7 @@ class DatabaseHelper {
     if (response.statusCode == 201) {
       return HouseHoldInfo.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to create album.');
+      throw Exception('Failed to Update Data.');
     }
   }
 }

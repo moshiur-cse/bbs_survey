@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bbs_survey_app/login.dart';
 import 'package:bbs_survey_app/models/householdInfo.dart';
@@ -12,6 +13,17 @@ import 'horizontal_data_table.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+List<HouseHoldInfo> _houseHoldInfoes = [];
+HouseHoldInfo _houseHoldInfo = HouseHoldInfo();
+DatabaseHelper _dbHelper;
+final _formkey = GlobalKey<FormState>();
+final _ctrHouseHoldId = TextEditingController();
+final _ctrName = TextEditingController();
+final _ctrMobile = TextEditingController();
+final _ctrNID = TextEditingController();
+final _ctrMaleNo = TextEditingController();
+final _ctrFemaleNo = TextEditingController();
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -38,40 +50,34 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
-  List<HouseHoldInfo> _houseHoldInfoes = [];
-
-  HouseHoldInfo _houseHoldInfo = HouseHoldInfo();
-  DatabaseHelper _dbHelper;
-  final _formkey = GlobalKey<FormState>();
-
-  final _ctrHouseHoldId = TextEditingController();
-  final _ctrName = TextEditingController();
-  final _ctrMobile = TextEditingController();
-  final _ctrNID = TextEditingController();
-  final _ctrMaleNo = TextEditingController();
-  final _ctrFemaleNo = TextEditingController();
-
-  void _onItemTapped(int index) {
+  Future<void> _onItemTapped(int index) async {
     if (index == 2) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HorizontalTable()),
       );
     } else if (index == 1) {
-      //Timer(Duration(seconds: 3), () {
+      _refreshContactList();
 
-      _houseHoldInfo.householdId = "22";
-      _houseHoldInfo.nameOfHead = "Naushin";
-      _houseHoldInfo.nationalId = "dhfsdklfhsdlf";
-      _houseHoldInfo.mobileNumber = "mobileNumber";
-      _houseHoldInfo.numberOfMale = 3;
-      _houseHoldInfo.numberOfFemale = 3;
-
-      var a = _dbHelper.addHouseHoldInfo(_houseHoldInfo);
-
-      //var a=_dbHelper.fetchAlbum();
-      Toast.show(a.toString(), context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          if (_houseHoldInfoes.length > 0) {
+            for (var item in _houseHoldInfoes) {
+              _dbHelper.addHouseHoldInfo(item);
+              Toast.show("Household infoes sync Successfully", context,
+                  duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+              _dbHelper.deleteHouseHoldInfo(item.id);
+            }
+          } else {
+            Toast.show("No Data Available", context,
+                duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+          }
+        }
+      } on SocketException catch (_) {
+        Toast.show("Internet Not Available", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      }
     }
     setState(() {
       _selectedIndex = index;
